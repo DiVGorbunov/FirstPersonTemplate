@@ -120,7 +120,7 @@ public class PlayerCharacterController : MonoBehaviour
 
     protected bool needTeleport = false;
     protected Vector3 teleportLocation;
-    protected Vector3 upVectorTeleport;
+    protected Vector3 forwardTeleport;
 
     void Start()
     {
@@ -149,10 +149,10 @@ public class PlayerCharacterController : MonoBehaviour
         UpdateCharacterHeight(true);
     }
 
-    public void teleportTo(Vector3 position, Vector3 upVector)
+    public void teleportTo(Vector3 position, Vector3 forwardVector)
     {
         teleportLocation = position;
-        upVectorTeleport = upVector;
+        forwardTeleport = forwardVector;
         needTeleport = true;
     }
 
@@ -162,7 +162,7 @@ public class PlayerCharacterController : MonoBehaviour
         {
             m_Controller.enabled = false;
             this.transform.position = teleportLocation;
-            this.transform.forward = upVectorTeleport;
+            this.transform.forward = forwardTeleport;
             m_Controller.enabled = true;
             needTeleport = false;
         }        

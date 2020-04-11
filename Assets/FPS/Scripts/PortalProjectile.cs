@@ -12,7 +12,7 @@ public class PortalProjectile : ProjectileStandard
         GameObject portal = GameObject.Instantiate<GameObject>(PortalPrefab);
         Transform portalTransform = portal.GetComponent<Transform>();
         portalTransform.position = point;
-        portalTransform.up = normal;
+        portalTransform.forward = normal;
 
         // impact vfx
         if (impactVFX)

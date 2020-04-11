@@ -22,12 +22,12 @@ public class Portal : MonoBehaviour
             {
                 Camera cam = spawnedRedPortal.GetComponentInChildren<Camera>();
                 cam.transform.position = this.transform.position;
-                cam.transform.forward = this.transform.up;
+                cam.transform.forward = this.transform.forward;
 
                 cam = this.gameObject.GetComponentInChildren<Camera>();
 
                 cam.transform.position = spawnedRedPortal.transform.position;
-                cam.transform.forward = spawnedRedPortal.transform.up;
+                cam.transform.forward = spawnedRedPortal.transform.forward;
             }
         }
         else {
@@ -40,11 +40,11 @@ public class Portal : MonoBehaviour
             {
                 Camera cam = spawnedBluePortal.GetComponentInChildren<Camera>();
                 cam.transform.position = this.transform.position;
-                cam.transform.forward = this.transform.up;
+                cam.transform.forward = this.transform.forward;
                 cam = this.gameObject.GetComponentInChildren<Camera>();
 
                 cam.transform.position = spawnedBluePortal.transform.position;
-                cam.transform.forward = spawnedBluePortal.transform.up;
+                cam.transform.forward = spawnedBluePortal.transform.forward;
             }
         }
     }
@@ -52,7 +52,17 @@ public class Portal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        /*Vector3 orientation = Camera.main.transform.forward;
+        if (spawnedBluePortal)
+        {
+            Camera cam = spawnedBluePortal.GetComponentInChildren<Camera>();
+            cam.transform.forward = -orientation;
+        }
+        if (spawnedRedPortal)
+        {
+            Camera cam = spawnedRedPortal.GetComponentInChildren<Camera>();
+            cam.transform.forward = -orientation;
+        }*/
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -62,31 +72,31 @@ public class Portal : MonoBehaviour
             if (spawnedBluePortal && spawnedBluePortal)
             {
                 Vector3 telep;
-                Vector3 upVector;
+                Vector3 forwardVector;
                 if (isBlue)
                 {
                     telep = spawnedRedPortal.transform.position;
-                    upVector = spawnedRedPortal.transform.up;
-                    telep += upVector * 0.5f;
+                    forwardVector = spawnedRedPortal.transform.forward;
+                    telep += forwardVector * 0.5f;
                 }
                 else {
                     telep = spawnedBluePortal.transform.position;
-                    upVector = spawnedBluePortal.transform.up;
-                    telep += upVector * 0.5f;
+                    forwardVector = spawnedBluePortal.transform.forward;
+                    telep += forwardVector * 0.5f;
                 }
 
                 PlayerCharacterController controller = collider.gameObject.GetComponent<PlayerCharacterController>();
 
                 if (controller)
                 {
-                    controller.teleportTo(telep, upVector);
+                    controller.teleportTo(telep, forwardVector);
                 }
                 else
                 {
                     ProjectileStandard projectile = collider.gameObject.GetComponent<ProjectileStandard>();
                     if (projectile)
                     {
-                        projectile.teleportTo(telep, upVector);
+                        projectile.teleportTo(telep, forwardVector);
                     }
                 }
             }
